@@ -1,0 +1,379 @@
+
+/* =========================================================
+   ORGANIZATIONS PAGE
+   ========================================================= */
+
+/* ---------- Hero section ---------- */
+
+.organizations-hero {
+  position: relative;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.35)
+    ),
+    url("../images/organizations-hero.jpg");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.organizations-hero-content {
+  width: 88%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.organizations-hero h1 {
+  margin-bottom: 14px;
+  color: var(--white);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.15;
+}
+
+.organizations-hero p {
+  max-width: 400px;
+  color: var(--white);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+
+/* ---------- Organizations section ---------- */
+
+.organizations {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 5% 15%,
+      rgba(255, 195, 45, 0.18) 0,
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 95% 75%,
+      rgba(201, 39, 45, 0.08) 0,
+      transparent 25%
+    ),
+    var(--cream);
+}
+
+
+/* Decorative circles */
+
+.organizations::before,
+.organizations::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.organizations::before {
+  width: 230px;
+  height: 230px;
+  top: 80px;
+  left: -130px;
+  border: 35px solid rgba(255, 195, 45, 0.2);
+}
+
+.organizations::after {
+  width: 180px;
+  height: 180px;
+  right: -100px;
+  bottom: 100px;
+  border: 28px solid rgba(201, 39, 45, 0.08);
+}
+
+
+/* ---------- Section heading ---------- */
+
+.organizations-header {
+  width: 88%;
+  max-width: 1200px;
+  margin: 0 auto 45px;
+}
+
+.organizations-title h2 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 22px;
+  color: var(--red);
+}
+
+.organizations-title h2::after {
+  content: "";
+  display: block;
+  width: 65px;
+  height: 5px;
+  margin-top: 12px;
+  background: var(--yellow);
+  border-radius: 20px;
+}
+
+.organizations-title p {
+  max-width: 500px;
+  color: var(--navy);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   ORGANIZATION CARDS
+   ========================================================= */
+
+
+/* ---------- Grid layout ---------- */
+
+.organizations-grid {
+  width: 88%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 35px;
+  align-items: stretch;
+}
+
+
+/* ---------- Card appearance ---------- */
+
+.organization-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  min-width: 0;
+  height: 100%;
+
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(22, 43, 69, 0.12);
+  border-radius: 18px;
+
+  box-shadow: 0 8px 25px rgba(22, 43, 69, 0.06);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+
+
+/* ---------- Organization images ---------- */
+
+.organization-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 190px;
+
+  margin: 0;
+  padding: 25px 30px 10px;
+
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.organization-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* ---------- Card information ---------- */
+
+.organization-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  padding: 10px 25px 25px;
+}
+
+
+/* ---------- Card title ---------- */
+
+.organization-info h3 {
+  min-height: 62px;
+  margin: 0 0 12px;
+
+  color: var(--dark-navy, var(--navy));
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+
+/* ---------- Card description ---------- */
+
+.organization-info p {
+  flex: 1;
+
+  margin: 0 0 25px;
+
+  color: #4d5663;
+  font-size: 0.76rem;
+  line-height: 1.7;
+}
+
+
+/* ---------- Learn More button ---------- */
+
+.organization-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 38px;
+
+  margin-top: auto;
+  padding: 8px 18px;
+
+  background: var(--red-button, var(--red));
+  color: var(--yellow);
+
+  border: 2px solid var(--red-button, var(--red));
+  border-radius: 30px;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.organization-btn:hover {
+  background: transparent;
+  color: var(--red-button, var(--red));
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1000px) {
+  .organizations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+  }
+
+  .organization-image {
+    height: 190px;
+  }
+
+  .organization-info {
+    padding: 10px 22px 22px;
+  }
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 700px) {
+  .organizations-hero {
+    min-height: 280px;
+  }
+
+  .organizations-hero-content {
+    width: 86%;
+    padding: 40px 0;
+  }
+
+  .organizations-hero h1 {
+    font-size: 2.1rem;
+  }
+
+  .organizations-hero p {
+    max-width: 310px;
+    font-size: 0.73rem;
+  }
+
+  .organizations {
+    padding: 45px 0 55px;
+  }
+
+  .organizations-header {
+    width: 86%;
+    margin-bottom: 35px;
+  }
+
+  .organizations-title h2 {
+    font-size: 2.1rem;
+  }
+
+  .organizations-grid {
+    width: 86%;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .organization-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .organization-image {
+    height: 210px;
+    padding: 25px 35px 10px;
+  }
+
+  .organization-info {
+    padding: 10px 25px 25px;
+  }
+
+  .organization-info h3 {
+    min-height: auto;
+    font-size: 0.95rem;
+  }
+
+  .organization-info p {
+    min-height: auto;
+    font-size: 0.75rem;
+  }
+
+  .organization-btn {
+    min-height: 40px;
+    font-size: 0.75rem;
+  }
+}
+
+
+/* ---------- Accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .organization-card,
+  .organization-btn {
+    transition: none;
+  }
+
+  .organization-card:hover,
+  .organization-btn:hover {
+    transform: none;
+  }
+}

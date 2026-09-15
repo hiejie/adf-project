@@ -1,0 +1,1613 @@
+
+/* ===========================================================================
+  RESET AND GENERAL STYLES (header/nav,footer,colors,fonts,button,body)
+==============================================================================*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: #c92b2e;
+  background: #f8f7df;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+section {
+  position: relative;
+}
+
+h1,
+h2 {
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+  COLOR VARIABLES
+========================================================= */
+
+:root {
+  --cream: #f8f7df;
+  --orange: #f9dca6;
+  --yellow: #ffc32d;
+  --red: #c9272d;
+  --red-button: #ce2b2f;
+  --navy: #162b45;
+  --dark-navy: #1b2a49;
+  --white: #ffffff;
+  --dark-text: #333333;
+  --gray: #eeeeee;
+  --muted: #8c8c8c;
+}
+
+
+/* =========================================================
+  GENERAL SECTION BACKGROUNDS
+========================================================= */
+
+.section-cream {
+  background: var(--cream);
+}
+
+.section-orange {
+  background: var(--orange);
+}
+
+
+/* =========================================================
+  HEADER / NAVIGATION
+========================================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: var(--yellow);
+  border-bottom: 1px solid rgba(22, 43, 69, 0.12);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 195, 45, 0.62);
+  box-shadow: 0 5px 20px rgba(22, 43, 69, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar {
+  width: 100%;
+  max-width: 1400px;
+  min-height: 78px;
+  margin: 0 auto;
+  padding: 0px 7%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+/* Active navigation link */
+.nav-links a.active {
+    color: var(--red);
+    font-weight: 700;
+}
+
+/* Keep the underline visible */
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* Brand / Logo */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: var(--red);
+  font-size: 1.35rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.brand img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+
+/* =========================================================
+  DESKTOP NAVIGATION
+========================================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 32px;
+}
+
+.nav-links a {
+  position: relative;
+
+  color: var(--navy);
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  transition: color 0.25s ease;
+}
+
+/* Animated underline */
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+
+  width: 0;
+  height: 2px;
+
+  background: var(--red);
+  transition: width 0.25s ease;
+}
+
+.nav-links a:hover {
+  color: var(--red);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* =========================================================
+   AUTO-HIDE NAVIGATION
+========================================================= */
+
+.site-header {
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Hide the navbar when the mouse is away */
+.site-header.nav-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Keep the navbar visible on mobile */
+@media (max-width: 650px) {
+  .site-header.nav-hidden {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+
+/* =========================================================
+  HAMBURGER MENU
+========================================================= */
+
+.menu-toggle {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+
+  border: 1px solid var(--navy);
+  border-radius: 8px;
+
+  background: transparent;
+  cursor: pointer;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.menu-toggle span {
+  display: block;
+
+  width: 22px;
+  height: 2px;
+
+  background: var(--navy);
+  border-radius: 10px;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* Hamburger becomes an X */
+
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* =========================================================
+  REUSABLE BUTTONS
+========================================================= */
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 145px;
+  padding: 13px 25px;
+
+  border: 2px solid var(--red-button);
+  border-radius: 30px;
+
+  background: var(--red-button);
+  color: var(--white);
+
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.btn:hover {
+  background: transparent;
+  color: var(--red-button);
+  transform: translateY(-2px);
+}
+
+.btn-small {
+  min-width: 125px;
+  padding: 8px 20px;
+  font-size: 0.75rem;
+}
+
+.outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 9px 20px;
+
+  border: 1px solid var(--white);
+  border-radius: 30px;
+
+  color: var(--white);
+  font-size: 0.75rem;
+
+  transition: background 0.2s ease;
+}
+
+.outline-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================================
+  HERO SECTION (index.html)
+========================================================= */
+
+.hero {
+  min-height: 590px;
+  padding: 70px 7% 145px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 55px;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  flex: 1;
+  max-width: 420px;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+
+  color: var(--red);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.hero h1 {
+  color: var(--red);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+}
+
+.hero-subtitle {
+  margin-top: 12px;
+
+  color: var(--red);
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.hero-description {
+  max-width: 310px;
+  margin: 18px 0 20px;
+
+  color: var(--dark-text);
+  font-size: 0.9rem;
+}
+
+.hero-image {
+  position: relative;
+  z-index: 2;
+
+  flex: 1.4;
+  max-width: 760px;
+}
+
+.hero-image img {
+  width: 100%;
+  aspect-ratio: 1.8 / 1;
+  object-fit: cover;
+  border-radius: 28px;
+}
+
+
+/* =========================================================
+  HERO CURVE
+========================================================= */
+
+.hero-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.hero-curve svg {
+  position: relative;
+  display: block;
+
+  width: calc(100% + 1.3px);
+  height: 158px;
+}
+
+.hero-curve .shape-fill {
+  fill: var(--orange);
+}
+
+
+/* =========================================================
+  COUNTDOWN TIMER
+========================================================= */
+
+/* Shared countdown container */
+
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* Hero countdown */
+
+.hero .countdown {
+  margin: 25px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.countdown-title {
+  margin-bottom: 12px;
+
+  color: var(--dark-navy);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Countdown boxes */
+
+.countdown-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--dark-navy);
+  color: var(--white);
+
+  width: 75px;
+  min-height: 75px;
+  padding: 8px;
+
+  border-radius: 10px;
+  text-align: center;
+}
+
+.countdown-box span {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.countdown-box small {
+  margin-top: 4px;
+
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+  ABOUT SECTION
+========================================================= */
+
+.about {
+  min-height: 520px;
+  padding: 95px 9% 130px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 75px;
+  overflow: hidden;
+}
+
+.about-image {
+  position: relative;
+  z-index: 2;
+
+  flex: 1;
+  max-width: 400px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 0;
+}
+
+.about-content {
+  position: relative;
+  z-index: 2;
+
+  flex: 1.2;
+  max-width: 620px;
+  text-align: center;
+}
+
+.about-content h2 {
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  margin-bottom: 12px;
+
+  color: var(--red);
+  font-size: 0.88rem;
+}
+
+.about-content .contact-note {
+  margin-top: 22px;
+  font-size: 0.8rem;
+}
+
+.about-content .btn {
+  margin-top: 8px;
+}
+
+
+/* =========================================================
+  ABOUT CURVE
+========================================================= */
+
+.about-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+
+  transform: rotate(180deg);
+}
+
+.about-curve svg {
+  position: relative;
+  display: block;
+
+  width: calc(100% + 1.3px);
+  height: 140px;
+
+  transform: rotateY(180deg);
+}
+
+.about-curve .shape-fill {
+  fill: var(--cream);
+}
+
+
+/* =========================================================
+  ORGANIZATIONS SECTION
+========================================================= */
+
+.organizations {
+  width: 100%;
+  padding: 65px 3.5% 75px;
+
+  background: var(--cream);
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Section header */
+
+.organizations-header {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto 35px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+.organizations-title {
+  max-width: 500px;
+}
+
+.organizations-title .eyebrow {
+  margin-bottom: 10px;
+}
+
+.organizations-title h2 {
+  margin-bottom: 12px;
+
+  color: var(--red);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.organizations-title p:last-child {
+  max-width: 400px;
+
+  color: var(--dark-text);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+
+/* Learn More button */
+
+.organizations-learn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+  padding: 11px 50px;
+
+  background: transparent;
+  color: var(--red);
+
+  border: 1.5px solid var(--red);
+  border-radius: 50px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.organizations-learn-btn:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+
+/* =========================================================
+  ORGANIZATION CARDS
+========================================================= */
+
+.organizations-grid {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.organization-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  overflow: hidden;
+
+  background: var(--white);
+  border: 1px solid #222222;
+  border-radius: 5px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* Card image */
+
+.organization-image {
+  width: 100%;
+  aspect-ratio: 1.45 / 1;
+
+  background: var(--gray);
+  overflow: hidden;
+}
+
+.organization-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  display: block;
+}
+
+
+/* Card content */
+
+.organization-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex: 1;
+  padding: 14px 12px 12px;
+}
+
+
+/* Organization number */
+
+.organization-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+  margin-bottom: 14px;
+
+  border: 1.5px solid #222222;
+
+  color: #222222;
+  background: var(--white);
+
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+
+/* Organization title */
+
+.organization-info h3 {
+  margin-bottom: 12px;
+
+  color: var(--red);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+
+/* Description lines */
+
+.description-lines {
+  width: 100%;
+  margin-bottom: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+
+/* Organization button */
+
+.organization-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 26px;
+  margin-top: auto;
+
+  background: transparent;
+  color: #222222;
+
+  border: 1.5px solid #222222;
+  border-radius: 0;
+
+  font-size: 0.8rem;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.organization-btn:hover {
+  background: #222222;
+  color: var(--white);
+}
+
+
+/* =========================================================
+  PROMOTIONAL SECTION
+========================================================= */
+
+.adf-promotion {
+  position: relative;
+  overflow: hidden;
+
+  padding: 50px 8%;
+
+  background: var(--navy);
+  color: var(--white);
+}
+
+.promotion-content {
+  position: relative;
+  z-index: 1;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 50px;
+}
+
+
+/* Promotion text */
+
+.promotion-text {
+  flex: 1;
+}
+
+.promotion-tag {
+  display: inline-block;
+
+  margin-bottom: 15px;
+
+  color: #e7b86a;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.promotion-text h2 {
+  margin: 0 0 20px;
+
+  font-size: clamp(35px, 5vw, 64px);
+  line-height: 1.1;
+}
+
+.promotion-text p {
+  max-width: 500px;
+  margin-bottom: 30px;
+
+  color: #d5dfeb;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+
+/* Register button */
+
+.promotion-btn {
+  display: inline-block;
+
+  padding: 14px 25px;
+
+  background: #e7b86a;
+  color: var(--navy);
+
+  border-radius: 30px;
+
+  font-weight: 700;
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.promotion-btn:hover {
+  background: var(--white);
+  transform: translateY(-3px);
+}
+
+
+/* Promotion countdown */
+
+.countdown-container {
+  flex: 1;
+  text-align: center;
+}
+
+.countdown-label {
+  margin-bottom: 20px;
+
+  color: #d5dfeb;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Override shared countdown style for promotion */
+
+.adf-promotion .countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.adf-promotion .countdown-box {
+  width: auto;
+  min-height: auto;
+  padding: 18px 8px;
+
+  background: var(--white);
+  color: var(--navy);
+
+  border-radius: 12px;
+}
+
+.adf-promotion .countdown-box span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.adf-promotion .countdown-box small {
+  margin-top: 0;
+
+  color: #52657b;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+
+/* Promotion wave */
+
+.promotional-wave {
+  position: absolute;
+  top: -1px;
+  left: 0;
+
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.promotional-wave svg {
+  position: relative;
+  display: block;
+
+  width: calc(100% + 1.3px);
+  height: 139px;
+}
+
+.promotional-wave .shape-fill {
+  fill: var(--cream);
+}
+
+
+/* =========================================================
+  JOIN / VIDEO SECTION
+========================================================= */
+
+.join-section {
+  position: relative;
+  overflow: hidden;
+
+  padding: 75px 6% 130px;
+
+  background: var(--orange);
+
+  text-align: center;
+}
+
+.join-content {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 0 auto 38px;
+  padding-top: 30px;
+}
+
+.join-content h2 {
+  margin-bottom: 20px;
+  color: var(--red);
+}
+
+.join-content p {
+  color: var(--red);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+
+/* Video container */
+
+.video-container {
+  width: min(100%, 500px);
+  margin: 0 auto;
+}
+
+.video-preview {
+  position: relative;
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+
+  background: var(--gray);
+  border-radius: 0;
+}
+
+.video-preview img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.video-preview:hover img {
+  transform: scale(1.03);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: grid;
+  place-items: center;
+
+  width: 70px;
+  height: 70px;
+
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--red);
+
+  border-radius: 50%;
+
+  font-size: 1.6rem;
+
+  transform: translate(-50%, -50%);
+}
+
+
+/* =========================================================
+  PHOTO GALLERY
+========================================================= */
+
+.join-gallery {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 55px auto 0;
+
+  text-align: left;
+}
+
+.gallery-label {
+  margin-bottom: 10px;
+
+  color: var(--muted);
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+}
+
+
+/* Gallery layout */
+
+.join-gallery-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+
+  gap: 6px;
+}
+
+
+/* Gallery items */
+
+.join-gallery-grid .gallery-item {
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+  background: var(--gray);
+}
+
+
+/* Large image on the left */
+
+.join-gallery-grid .gallery-main {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+
+/* Gallery images */
+
+.join-gallery-grid .gallery-item img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+  min-height: 100px;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+
+/* Gallery wave */
+
+.join-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.join-wave svg {
+  position: relative;
+  display: block;
+
+  width: calc(104% + 1.3px);
+  height: 152px;
+}
+
+.join-wave .shape-fill {
+  fill: var(--navy);
+}
+
+
+/* =========================================================
+  FOOTER
+========================================================= */
+
+.site-footer {
+  padding: 32px 6% 25px;
+
+  background: var(--yellow);
+  color: var(--red);
+
+  text-align: center;
+}
+
+.footer-contact p {
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.footer-branding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.footer-branding img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.footer-branding p {
+  font-size: 0.65rem;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+  RESPONSIVE DESIGN — TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  /* Header */
+
+  .navbar {
+    min-height: 70px;
+    padding: 12px 5%;
+  }
+
+  .brand {
+    font-size: 1rem;
+  }
+
+  .brand img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+
+  /* Hero */
+
+  .hero {
+    padding: 65px 6% 120px;
+    gap: 30px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.7rem, 5vw, 4.5rem);
+  }
+
+  /* About */
+
+  .about {
+    gap: 35px;
+    padding: 80px 7% 120px;
+  }
+
+  /* Organizations */
+
+  .organizations {
+    padding: 60px 5% 70px;
+  }
+
+  .organizations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* Gallery */
+
+  .gallery-grid {
+    gap: 12px;
+  }
+
+  .gallery-item img {
+    min-height: 260px;
+  }
+
+}
+
+
+/* =========================================================
+  RESPONSIVE DESIGN — MOBILE NAVIGATION
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .navbar {
+    min-height: 70px;
+    padding: 10px 6%;
+  }
+
+  .brand {
+    gap: 1px;
+    margin-left: 8px;
+    margin-right: auto;
+  }
+
+  .brand img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .brand span {
+    font-size: 0.78rem;
+  }
+
+  /* Show hamburger */
+
+  .menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+
+    margin-left: auto;
+    margin-right: 8px;
+  }
+
+  /* Hide navigation by default */
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 0;
+    padding: 12px 6% 20px;
+
+    background: rgba(248, 247, 223, 0.97);
+    border-bottom: 1px solid rgba(22, 43, 69, 0.12);
+    box-shadow: 0 10px 20px rgba(22, 43, 69, 0.1);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translateY(-10px);
+
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  /* Open navigation */
+
+  .nav-links.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    display: block;
+
+    padding: 14px 0;
+
+    font-size: 0.85rem;
+
+    border-bottom: 1px solid rgba(22, 43, 69, 0.1);
+  }
+
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links a::after {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+  RESPONSIVE DESIGN — MOBILE CONTENT
+========================================================= */
+
+@media (max-width: 700px) {
+
+  h2 {
+    font-size: 2.1rem;
+  }
+
+  /* Hero */
+
+  .hero {
+    min-height: auto;
+    padding: 55px 7% 100px;
+
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero-description {
+    max-width: 360px;
+    margin: 18px auto;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .hero-image img {
+    aspect-ratio: 1.35 / 1;
+  }
+
+  .hero-curve {
+    bottom: -100px;
+    height: 180px;
+  }
+
+
+  /* About */
+
+  .about {
+    padding: 75px 8% 115px;
+
+    flex-direction: column;
+    gap: 35px;
+
+    text-align: center;
+  }
+
+  .about-image {
+    max-width: 320px;
+  }
+
+  .about-content {
+    max-width: 100%;
+  }
+
+  .about-content p {
+    font-size: 0.82rem;
+  }
+
+  .about-curve {
+    bottom: -100px;
+    height: 150px;
+  }
+
+
+  /* Organizations */
+
+  .organizations {
+    min-height: 520px;
+    padding: 55px 7% 65px;
+  }
+
+  .organizations-header {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .organizations-learn-btn {
+    align-self: flex-end;
+  }
+
+  .organizations-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .organization-card {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+
+  /* Promotion */
+
+  .adf-promotion {
+    padding: 60px 6%;
+  }
+
+  .promotion-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .promotion-text p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .countdown-container {
+    width: 100%;
+  }
+
+  .adf-promotion .countdown {
+    gap: 8px;
+  }
+
+  .adf-promotion .countdown-box {
+    padding: 15px 5px;
+  }
+
+
+  /* Hero countdown */
+
+  .hero .countdown {
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .hero .countdown-box {
+    width: 65px;
+    min-height: 65px;
+  }
+
+  .hero .countdown-box span {
+    font-size: 1.4rem;
+  }
+
+
+  /* Join section */
+
+  .join-section {
+    padding: 65px 7% 75px;
+  }
+
+  .join-content{
+    margin-top: 10%;
+  }
+
+  .join-content p {
+    font-size: 0.8rem;
+  }
+
+  /* Gallery */
+
+  .join-gallery {
+    margin-top: 40px;
+  }
+
+  .join-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 6px;
+  }
+
+  .join-gallery-grid .gallery-main {
+    grid-column: 1 / 3;
+    grid-row: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .join-gallery-grid .gallery-item {
+    aspect-ratio: 1.3 / 1;
+  }
+
+
+  /* Video play button */
+
+  .play-button {
+    width: 58px;
+    height: 58px;
+    font-size: 1.3rem;
+  }
+
+
+  /* Footer */
+
+  .footer-branding {
+    gap: 12px;
+  }
+
+  .footer-branding img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .footer-branding p {
+    font-size: 0.55rem;
+  }
+
+}
+
+
+/* =========================================================
+  SMALL MOBILE SCREENS
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .countdown-timer {
+    gap: 8px;
+  }
+
+  .countdown-box {
+    width: 65px;
+    min-height: 65px;
+  }
+
+  .countdown-box span {
+    font-size: 1.4rem;
+  }
+
+}
