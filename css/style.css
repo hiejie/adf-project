@@ -896,7 +896,7 @@ p {
 
 .promotion-btn:hover {
   background: var(--white);
-  transform: translateY(-3px);
+  transform: translateY(-1px);
 }
 
 
