@@ -243,6 +243,77 @@
   outline-offset: 3px;
 }
 
+/* ---------- Organization social platforms ---------- */
+
+.social-platforms {
+  padding: 75px 0 90px;
+  background: var(--cream);
+}
+
+.social-platforms-header {
+  width: 88%;
+  max-width: 1200px;
+  margin: 0 auto 35px;
+}
+
+.social-platforms-header h2 {
+  margin: 8px 0 12px;
+  color: var(--red);
+}
+
+.social-platforms-header > p:last-child {
+  max-width: 500px;
+  color: var(--navy);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.social-platforms-grid {
+  width: 88%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.social-platform-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 110px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(22, 43, 69, 0.12);
+  box-shadow: 0 6px 18px rgba(22, 43, 69, 0.06);
+}
+
+.social-platform-card img {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.social-platform-card h3 {
+  margin-bottom: 8px;
+  color: var(--red);
+  font-size: 0.9rem;
+}
+
+.social-platform-card a {
+  margin-right: 10px;
+  color: var(--navy);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.social-platform-card a:hover {
+  color: var(--red);
+}
+
 /* =========================================================
    ORGANIZATION CARDS
    ========================================================= */
@@ -414,6 +485,10 @@
   .organization-info {
     padding: 10px 22px 22px;
   }
+
+  .social-platforms-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 
@@ -487,6 +562,24 @@
   .organization-btn {
     min-height: 40px;
     font-size: 0.75rem;
+  }
+
+  .social-platforms {
+    padding: 55px 0 65px;
+  }
+
+  .social-platforms-header {
+    width: 86%;
+  }
+
+  .social-platforms-header h2 {
+    font-size: 2.1rem;
+  }
+
+  .social-platforms-grid {
+    width: 86%;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
