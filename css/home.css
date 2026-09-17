@@ -1113,8 +1113,14 @@ p {
 
   overflow: hidden;
   background: var(--gray);
+  cursor: zoom-in;
+  text-decoration: none;
 }
 
+.join-gallery-grid .gallery-item:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
 
 /* Large image on the left */
 
@@ -1136,6 +1142,64 @@ p {
   object-fit: cover;
 
   transition: transform 0.3s ease;
+}
+
+/* Zoom of gallery images*/
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: grid;
+  place-items: center;
+  padding: 5vw;
+
+  background: rgba(0, 0, 0, 0.82);
+  display: none;
+}
+
+.gallery-lightbox:target {
+  display: grid;
+}
+
+.gallery-lightbox img {
+  display: block;
+  max-width: min(100%, 1100px);
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.gallery-lightbox-close {
+  position: absolute;
+  top: 70px;
+  right: 28px;
+  
+
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--red);
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.gallery-lightbox-close:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+.join-gallery-grid .gallery-item.zoomed img {
+  transform: scale(1.25);
 }
 
 
