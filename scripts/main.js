@@ -39,6 +39,18 @@
     });
   });
 
+  /* Center the About section */
+  const heroAboutLink = document.querySelector('.hero a[href="#about"]');
+  const aboutSection = document.getElementById("about");
+
+  if (heroAboutLink && aboutSection) {
+    heroAboutLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      aboutSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      history.replaceState(null, "", "#about");
+    });
+  }
+
 
 /* =========================================================
    AUTO-HIDE NAVIGATION ON DESKTOP
