@@ -1,4 +1,6 @@
- //This file contains the animation/behavior of navigation 
+ /* =========================================================
+   NAVIGATION 
+========================================================= */
  
  const header = document.querySelector(".site-header");
   const menuToggle = document.getElementById("menuToggle");
@@ -93,4 +95,45 @@ header.addEventListener("mouseleave", () => {
 /* Initially hide after 3 seconds */
 if (!isMobile()) {
   hideNavTimeout = setTimeout(hideNavigation, 3000);
+}
+
+/* =========================================================
+   COUNTDOWN TIMER FOR ADF EVENT
+========================================================= */
+const countdown = document.getElementById("countdown");
+
+if (countdown) {
+  const eventStart = new Date(2027, 1, 23, 0, 0, 0).getTime(); //year month day hour minute second
+  const days = document.getElementById("days");
+  const hours = document.getElementById("hours");
+  const mins = document.getElementById("minutes");
+  const seconds = document.getElementById("seconds");
+  const countdownLabel = countdown.previousElementSibling;
+  let countdownInt;
+
+  function updateCountdown() {
+    const remaining = eventStart - Date.now();
+
+    if (remaining <= 0) {
+      days.textContent = "00";
+      hours.textContent = "00";
+      mins.textContent = "00";
+      seconds.textContent = "00";
+
+      if (countdownLabel) {
+        countdownLabel.textContent = "EVENT IS UNDERWAY";
+      }
+
+      clearInterval(countdownInt);
+      return;
+    }
+
+    days.textContent = String(Math.floor(remaining / (1000 * 60 * 60 * 24))).padStart(2, "0");
+    hours.textContent = String(Math.floor((remaining / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+    mins.textContent = String(Math.floor((remaining / (1000 * 60)) % 60)).padStart(2, "0");
+    seconds.textContent = String(Math.floor((remaining / 1000) % 60)).padStart(2, "0");
+  }
+
+  updateCountdown();
+  countdownInt = setInterval(updateCountdown, 1000);
 }
