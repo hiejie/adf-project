@@ -112,7 +112,7 @@ p {
   max-width: 1400px;
   min-height: 78px;
   margin: 0 auto;
-  padding: 0px 7%;
+  padding: 0px 5%;
 
   display: flex;
   align-items: center;
@@ -145,8 +145,8 @@ p {
 }
 
 .brand img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
 }
 
@@ -702,12 +702,9 @@ p {
   overflow: hidden;
 
   background: var(--white);
-  border: 1px solid #222222;
-  border-radius: 5px;
+  border-radius: 10px;
 
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  box-shadow: 0 8px 25px rgba(22, 43, 69, 0.295);
 }
 
 
@@ -742,27 +739,6 @@ p {
 }
 
 
-/* Organization number */
-
-.organization-number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 22px;
-  height: 22px;
-  margin-bottom: 14px;
-
-  border: 1.5px solid #222222;
-
-  color: #222222;
-  background: var(--white);
-
-  font-size: 0.6rem;
-  font-weight: 600;
-}
-
-
 /* Organization title */
 
 .organization-info h3 {
@@ -784,36 +760,6 @@ p {
   display: flex;
   flex-direction: column;
   gap: 7px;
-}
-
-
-/* Organization button */
-
-.organization-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 65px;
-  height: 26px;
-  margin-top: auto;
-
-  background: transparent;
-  color: #222222;
-
-  border: 1.5px solid #222222;
-  border-radius: 0;
-
-  font-size: 0.8rem;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.organization-btn:hover {
-  background: #222222;
-  color: var(--white);
 }
 
 
