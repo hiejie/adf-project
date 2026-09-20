@@ -149,3 +149,21 @@ if (countdown) {
   updateCountdown();
   countdownInt = setInterval(updateCountdown, 1000);
 }
+
+/* =========================================================
+   SERVICES PAGE: FAQ SECTION
+========================================================= */
+
+const faqItems = document.querySelectorAll(".adf-faq-item");
+
+faqItems.forEach((item) => {
+
+  const question = item.querySelector(".adf-faq-question");
+
+  question.addEventListener("click", () => {
+
+    item.classList.toggle("active");
+
+  });
+
+});
