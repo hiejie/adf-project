@@ -301,18 +301,44 @@
   font-size: 0.9rem;
 }
 
-.social-platform-card a {
-  margin-right: 10px;
-  color: var(--navy);
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+/* ---------- Social Media Icons ---------- */
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.social-platform-card a:hover {
-  color: var(--red);
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: var(--navy);
+  color: var(--white);
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
 }
+
+.social-icons a:hover {
+  background: var(--red);
+}
+
+.social-icons i {
+  font-size: 15px;
+}
+
+
 
 /* =========================================================
    ORGANIZATION CARDS
