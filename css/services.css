@@ -1,0 +1,987 @@
+/* =========================================================
+  Services Page
+========================================================= *
+
+/*Page Intro*/
+
+.adf-services-page {
+  width: 100%;
+  overflow: hidden;
+  background: var(--cream);
+  position: relative;
+}
+
+.shape-divider-bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    z-index: -1;
+    
+    
+}
+
+.shape-divider-bottom svg{
+    position: relative;
+    display: block;
+    width: calc(202% + 1.3px);
+    height: 417px;
+}
+
+.shape-divider-bottom .shape-fill{
+      fill: #F9DCA6;
+}
+
+
+/* Main heading area */
+
+.adf-services-intro {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5px 6% 70px;
+    z-index: 1;
+}
+
+
+/* Heading */
+
+.adf-section-heading {
+  max-width: 700px;
+  margin: 0 auto 45px;
+
+  text-align: center;
+}
+
+.adf-eyebrow {
+  display: block;
+
+  margin-bottom: 12px;
+
+  color: var(--red);
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.adf-section-heading h1 {
+  margin-bottom: 16px;
+
+  color: var(--red);
+
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.adf-section-heading p {
+  max-width: 550px;
+  margin: 0 auto;
+
+  color: var(--dark-text);
+
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+
+
+/* =========================================================
+   SERVICE CARDS
+========================================================= */
+
+.adf-service-cards {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 20px;
+    z-index: 1px;
+}
+
+
+.adf-service-card {
+  position: relative;
+  min-height: 250px;
+  padding: 40px;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: var(--cream);
+
+  border: 1px solid rgba(22, 43, 69, 0.15);
+
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(128, 64, 34, 0.171);
+}
+
+/* Number */
+.adf-service-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+
+  margin-bottom: 25px;
+
+  border: 1px solid var(--red);
+
+  color: var(--red);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.adf-service-card h2 {
+  max-width: 450px;
+  margin: 0 0 15px;
+  color: var(--red);
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -1.5px;
+}
+
+
+.adf-service-card p {
+  max-width: 430px;
+  margin: 0 0 28px;
+  color: var(--dark-text);
+
+  font-size: 0.85rem;
+
+  line-height: 1.7;
+}
+
+
+/* Card link */
+.adf-service-link {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 22px;
+  background: var(--red);
+  border: none;
+  border-radius: 30px;
+  color: var(--white);
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.adf-service-link-visit{
+    color: var(--red);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: underline; 
+}
+
+.adf-service-link-visit:hover{
+    color: black;
+}
+
+.adf-service-link:hover {
+  background: var(--navy);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   SERVICE DETAILS AREA
+========================================================= */
+
+.adf-service-details {
+  width: 100%;
+  background: var(--white);
+}
+
+.shape-divider{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+.shape-divider svg{
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 155px;
+}
+
+.shape-divider .shape-fill{
+    fill: #F9DCA6;
+}
+
+
+
+.adf-detail-section {
+  width: 100%;
+  min-height: 650px;
+
+  display: grid;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   DISCOVER 
+========================================================= */
+
+
+.discover-section {
+  grid-template-columns: 48% 52%;
+  background: var(--cream);
+}
+
+/* ---------------------------------------------------------
+    Image
+--------------------------------------------------------- */
+
+.discover-image {
+  position: relative;
+
+  min-height: 650px;
+
+  overflow: hidden;
+}
+
+
+.discover-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.6s ease;
+}
+
+
+.discover-section:hover .discover-image img {
+  transform: scale(1.03);
+}
+
+
+/* Image label */
+
+.discover-image-label {
+  position: absolute;
+
+  left: 30px;
+  bottom: 30px;
+
+  padding: 9px 15px;
+
+  background: var(--red);
+
+  color: var(--white);
+
+  font-size: 0.65rem;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+/*Content*/
+
+.discover-content {
+  padding: 80px 8%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+}
+
+.detail-label {
+  display: block;
+
+  margin-bottom: 22px;
+
+  color: var(--red);
+
+  font-size: 0.65rem;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.discover-content h2,
+.experience-content h2 {
+  margin: 0 0 25px;
+
+  color: var(--red);
+
+  font-size: clamp(3rem, 5vw, 5rem);
+
+  line-height: 0.92;
+
+  letter-spacing: -2px;
+}
+
+.discover-content > p,
+.experience-content > p {
+  max-width: 540px;
+
+  margin: 0 0 15px;
+
+  color: var(--dark-text);
+
+  font-size: 0.86rem;
+
+  line-height: 1.8;
+}
+
+
+
+/* Key details */
+
+.key-details {
+  margin-top: 35px;
+}
+
+.key-details h3 {
+  margin-bottom: 18px;
+
+  color: var(--dark-navy);
+
+  font-size: 0.7rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.5px;
+}
+
+.detail-items {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 0;
+
+  border-top: 1px solid rgba(22, 43, 69, 0.15);
+}
+
+.detail-item {
+  min-height: 75px;
+
+  padding: 15px 15px 15px 0;
+
+  display: flex;
+
+  gap: 12px;
+
+  border-bottom: 1px solid rgba(22, 43, 69, 0.15);
+}
+
+.detail-item:nth-child(odd) {
+  border-right: 1px solid rgba(22, 43, 69, 0.15);
+}
+
+
+.detail-item:nth-child(even) {
+  padding-left: 15px;
+}
+
+
+.detail-item span {
+  flex-shrink: 0;
+
+  color: var(--red);
+
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+
+.detail-item p {
+  margin: 0;
+
+  color: var(--dark-text);
+
+  font-size: 0.7rem;
+
+  line-height: 1.5;
+}
+
+
+
+/* =========================================================
+   EXPERIENCE
+========================================================= */
+.experience-section {
+  grid-template-columns: 38% 62%;
+  background: var(--navy);
+  color: var(--white);
+  position: relative;
+}
+
+.shape-divider-exp{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 1;
+}
+
+.shape-divider-exp svg{
+    position: relative;
+    display: block;
+    width: calc(165% + 1.3px);
+    height: 280px;
+}
+
+.shape-divider-exp .shape-fill{fill: #F8F7DF;}
+/*Content*/
+.experience-content {
+  padding: 80px 12%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.experience-content .detail-label {
+  color: var(--yellow);
+}
+
+.experience-content h2 {
+  color: var(--white);
+}
+
+.experience-content > p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.experience-list {
+  list-style: none;
+  margin: 35px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.experience-list li {
+  min-height: 55px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  font-size: 0.72rem;
+}
+
+
+.experience-list li span {
+  color: var(--yellow);
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+
+
+
+/* =========================================================
+    GALLERY
+========================================================= */
+
+.experience-gallery-wrapper {
+  position: relative;
+  min-height: 650px;
+  padding: 30px;
+  background: #111f36;
+}
+
+/* Gallery header */
+
+.gallery-header {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* ---------------------------------------------------------
+   Scroll Area
+--------------------------------------------------------- */
+
+.experience-gallery {
+  height: 555px;
+  margin-top: 15px;
+  padding-right: 8px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color:
+    var(--yellow)
+    rgba(255, 255, 255, 0.08);
+}
+
+
+/* Gallery items */
+
+.experience-gallery-item {
+  margin: 0 0 25px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+
+.experience-gallery-item:last-child {
+  margin-bottom: 0;
+}
+
+
+.experience-gallery-item img {
+  width: 100%;
+  height: 310px;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+
+.experience-gallery-item:hover img {
+  transform: scale(1.035);
+}
+
+/* Caption */
+
+.experience-gallery-item figcaption {
+  min-height: 48px;
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  color: var(--dark-navy);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.experience-gallery-item figcaption span {
+  color: var(--red);
+  font-size: 0.55rem;
+}
+
+/* =========================================================
+   FAQ SECTION
+========================================================= */
+
+.adf-faq-section {
+  width: 100%;
+
+  padding: 110px 7%;
+
+  display: grid;
+
+  grid-template-columns: 0.8fr 1.2fr;
+
+  gap: 90px;
+
+  background: var(--cream);
+}
+
+.shape-divider-faq{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.shape-divider-faq svg{
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 90px;
+}
+
+.shape-divider-faq .shape-fill{
+    fill: #1B2A49;
+}
+
+/* =========================================================
+   FAQ INTRO
+========================================================= */
+
+.adf-faq-intro {
+  max-width: 420px;
+
+  align-self: start;
+
+  position: sticky;
+
+  top: 100px;
+}
+
+
+/* Small label */
+
+.adf-faq-label {
+  display: block;
+
+  margin-bottom: 20px;
+
+  color: var(--red);
+
+  font-size: 0.65rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+
+/* Heading */
+
+.adf-faq-intro h2 {
+  margin: 0 0 25px;
+
+  color: var(--red);
+
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+
+  line-height: 0.95;
+
+  letter-spacing: -2px;
+}
+
+
+/* Introduction */
+
+.adf-faq-intro p {
+  max-width: 390px;
+
+  margin: 0;
+
+  color: var(--dark-text);
+
+  font-size: 0.85rem;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   FAQ LIST
+========================================================= */
+
+.adf-faq-list {
+  width: 100%;
+
+  border-top: 1px solid rgba(22, 43, 69, 0.18);
+}
+
+
+/* =========================================================
+   FAQ ITEM
+========================================================= */
+
+.adf-faq-item {
+  border-bottom: 1px solid rgba(22, 43, 69, 0.18);
+}
+
+
+/* =========================================================
+   QUESTION BUTTON
+========================================================= */
+
+.adf-faq-question {
+  width: 100%;
+
+  min-height: 80px;
+
+  padding: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  background: transparent;
+
+  border: none;
+
+  color: var(--dark-navy);
+
+  font-family: inherit;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+/* Plus icon */
+
+.adf-faq-icon {
+  flex-shrink: 0;
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--red);
+
+  border-radius: 50%;
+
+  color: var(--red);
+
+  font-size: 1rem;
+
+  font-weight: 400;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+
+/* Hover */
+
+.adf-faq-question:hover {
+  color: var(--red);
+}
+
+
+/* =========================================================
+   FAQ ANSWER
+========================================================= */
+
+.adf-faq-answer {
+  max-width: 650px;
+
+  max-height: 0;
+
+  overflow: hidden;
+
+  transition:
+    max-height 0.35s ease,
+    padding 0.35s ease;
+}
+
+
+.adf-faq-answer p {
+  margin: 0;
+
+  padding: 0 45px 0 0;
+
+  color: var(--dark-text);
+
+  font-size: 0.8rem;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   ACTIVE FAQ
+========================================================= */
+
+.adf-faq-item.active .adf-faq-answer {
+  max-height: 200px;
+
+  padding-bottom: 25px;
+}
+
+
+.adf-faq-item.active .adf-faq-icon {
+  transform: rotate(45deg);
+
+  background: var(--red);
+
+  color: var(--white);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .adf-services-intro {
+    padding: 70px 6% 55px;
+  }
+
+  .discover-section,
+  .experience-section {
+    grid-template-columns: 1fr;
+  }
+
+   .discover-image {
+    min-height: 450px;
+  }
+
+  .discover-content {
+    padding: 65px 7%;
+  }
+  .experience-content {
+    padding: 65px 7%;
+  }
+
+  .experience-gallery-wrapper {
+    min-height: 600px;
+  }
+
+  .experience-gallery {
+    height: 500px;
+  }
+
+.adf-faq-section {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    padding: 80px 7%;
+}
+
+.adf-faq-intro {
+    position: static;
+    max-width: 650px;
+}
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .adf-services-intro {
+    padding: 55px 7% 45px;
+  }
+
+
+  .adf-section-heading {
+    margin-bottom: 35px;
+  }
+
+
+  .adf-section-heading h1 {
+    font-size: 2.5rem;
+  }
+
+  .shape-divider{
+    display: none;
+  }
+
+  /* Service cards */
+
+  .adf-service-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+
+  .adf-service-card {
+    min-height: auto;
+    padding: 25px;
+  }
+
+
+  /* Details */
+  .adf-service-details {
+    padding: 20px 5% 70px;
+  }
+
+  .adf-details-label {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 6px;
+  }
+
+
+  /* Discover */
+
+  .discover-content,
+  .experience-content {
+    padding: 35px 25px;
+  }
+
+
+  .discover-content h2,
+  .experience-content h2 {
+    font-size: 2rem;
+  }
+
+  /* Experience */
+  .experience-gallery {
+    height: 380px;
+    padding-top: 35px;
+  }
+  .experience-gallery-item img {
+    height: 220px;
+  }
+  .gallery-scroll-hint {
+    right: 20px;
+  }
+
+   .adf-faq-section {
+    padding: 65px 7%;
+    gap: 40px;
+  }
+
+  .adf-faq-intro h2 {
+    font-size: 3rem;
+  }
+
+  .adf-faq-question {
+    min-height: 70px;
+    font-size: 0.82rem;
+  }
+
+  .adf-faq-icon {
+    width: 27px;
+    height: 27px;
+    font-size: 0.9rem;
+  }
+
+  .adf-faq-answer p {
+    padding-right: 20px;
+    font-size: 0.75rem;
+  }
+
+  .shape-divider-faq{
+    display: none;
+  }
+
+}
