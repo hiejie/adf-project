@@ -1,0 +1,270 @@
+/* =========================================================
+   FAQ SECTION
+========================================================= */
+
+.adf-faq-section {
+  width: 100%;
+
+  padding: 110px 7%;
+
+  display: grid;
+
+  grid-template-columns: 0.8fr 1.2fr;
+
+  gap: 90px;
+
+  background: var(--cream);
+}
+/* =========================================================
+   FAQ INTRO
+========================================================= */
+
+.adf-faq-intro {
+  max-width: 420px;
+
+  align-self: start;
+
+  position: sticky;
+
+  top: 100px;
+}
+
+
+/* Small label */
+
+.adf-faq-label {
+  display: block;
+
+  margin-bottom: 20px;
+
+  color: var(--red);
+
+  font-size: 0.65rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+
+/* Heading */
+
+.adf-faq-intro h2 {
+  margin: 0 0 25px;
+
+  color: var(--red);
+
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+
+  line-height: 0.95;
+
+  letter-spacing: -2px;
+}
+
+
+/* Introduction */
+
+.adf-faq-intro p {
+  max-width: 390px;
+
+  margin: 0;
+
+  color: var(--dark-text);
+
+  font-size: 0.85rem;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   FAQ LIST
+========================================================= */
+
+.adf-faq-list {
+  width: 100%;
+
+  border-top: 1px solid rgba(22, 43, 69, 0.18);
+}
+
+
+/* =========================================================
+   FAQ ITEM
+========================================================= */
+
+.adf-faq-item {
+  border-bottom: 1px solid rgba(22, 43, 69, 0.18);
+}
+
+
+/* =========================================================
+   QUESTION BUTTON
+========================================================= */
+
+.adf-faq-question {
+  width: 100%;
+
+  min-height: 80px;
+
+  padding: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  background: transparent;
+
+  border: none;
+
+  color: var(--dark-navy);
+
+  font-family: inherit;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+
+/* Plus icon */
+
+.adf-faq-icon {
+  flex-shrink: 0;
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--red);
+
+  border-radius: 50%;
+
+  color: var(--red);
+
+  font-size: 1rem;
+
+  font-weight: 400;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+
+/* Hover */
+
+.adf-faq-question:hover {
+  color: var(--red);
+}
+
+
+/* =========================================================
+   FAQ ANSWER
+========================================================= */
+
+.adf-faq-answer {
+  max-width: 650px;
+
+  max-height: 0;
+
+  overflow: hidden;
+
+  transition:
+    max-height 0.35s ease,
+    padding 0.35s ease;
+}
+
+
+.adf-faq-answer p {
+  margin: 0;
+
+  padding: 0 45px 0 0;
+
+  color: var(--dark-text);
+
+  font-size: 0.8rem;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   ACTIVE FAQ
+========================================================= */
+
+.adf-faq-item.active .adf-faq-answer {
+  max-height: 200px;
+
+  padding-bottom: 25px;
+}
+
+
+.adf-faq-item.active .adf-faq-icon {
+  transform: rotate(45deg);
+
+  background: var(--red);
+
+  color: var(--white);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+@media (max-width: 900px) {
+    .adf-faq-section {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    padding: 80px 7%;
+}
+
+    .adf-faq-intro {
+        position: static;
+        max-width: 650px;
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+    .adf-faq-section {
+    padding: 65px 7%;
+    gap: 40px;
+  }
+
+  .adf-faq-intro h2 {
+    font-size: 3rem;
+  }
+
+  .adf-faq-question {
+    min-height: 70px;
+    font-size: 0.82rem;
+  }
+
+  .adf-faq-icon {
+    width: 27px;
+    height: 27px;
+    font-size: 0.9rem;
+  }
+
+  .adf-faq-answer p {
+    padding-right: 20px;
+    font-size: 0.75rem;
+  }
+
+}
