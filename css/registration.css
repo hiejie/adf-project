@@ -141,6 +141,20 @@ input[type="file"] {
   font-size: 0.75rem;
   font-weight: 400;
 }
+/* Submission status message */
+.form-status {
+  display: none;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.form-status.visible { display: block; }
+.form-status.success { background: #e9f7ee; color: #1f7a3f; }
+.form-status.error { background: #fdecea; color: var(--red); }
+
 /* Form actions */
 .form-actions {
   display: flex;

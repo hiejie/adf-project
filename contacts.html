@@ -88,10 +88,11 @@
           <textarea name="message" rows="6" placeholder="Write your message here..." required></textarea>
         </label>
 
-        <button class="contact-submit" type="submit">Send message</button>
+        <button class="contact-submit" type="submit" id="contactSubmit">Send message</button>
         <p class="contact-success" id="contactSuccess" role="status" aria-live="polite">
           Message sent! We&apos;ll reply within 1-2 business days.
         </p>
+        <p class="contact-success contact-error" id="contactError" role="alert" aria-live="assertive"></p>
       </form>
     </div>
 
