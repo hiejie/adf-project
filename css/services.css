@@ -179,8 +179,7 @@
   text-decoration: none;
 
   transition:
-    background 0.25s ease,
-    transform 0.25s ease;
+    background 0.25s ease
 }
 
 .adf-service-link-visit{
@@ -195,9 +194,9 @@
 }
 
 .adf-service-link:hover {
-  background: var(--navy);
-  color: var(--white);
-  transform: translateY(-1px);
+  border: 1px solid var(--red);
+  color: var(--red);
+  background: transparent;
 }
 
 /* =========================================================
