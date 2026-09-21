@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard · ADF 2027</title>
+  <style>
+    :root {
+      --cream: #f8f7df; --orange: #f9dca6; --red: #c9272d; --red-button: #ce2b2f;
+      --navy: #162b45; --white: #ffffff; --dark-text: #333333; --muted: #8c8c8c; --gray: #eeeeee;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); font-family: "Segoe UI", Arial, sans-serif; color: var(--dark-text); }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 28px; background: var(--navy); color: var(--white);
+    }
+    header h1 { margin: 0; font-size: 1.15rem; }
+    header .who { font-size: 0.8rem; color: #cfd8e3; }
+    header form { margin: 0; }
+    header button {
+      border: 1px solid rgba(255,255,255,0.4); background: transparent; color: var(--white);
+      padding: 8px 16px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; text-transform: uppercase;
+    }
+    header button:hover { background: rgba(255,255,255,0.12); }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 26px 20px 60px; }
+
+    .stat-row { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .stat-card {
+      flex: 1; min-width: 150px; background: var(--white); border-radius: 12px; padding: 18px 20px;
+      box-shadow: 0 8px 20px rgba(22,43,69,0.08);
+    }
+    .stat-card .num { font-size: 1.8rem; font-weight: 800; color: var(--red); }
+    .stat-card .label { font-size: 0.72rem; text-transform: uppercase; color: var(--muted); font-weight: 700; letter-spacing: 0.05em; }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab-btn {
+      border: none; background: var(--gray); color: var(--navy); padding: 10px 18px; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase; cursor: pointer;
+    }
+    .tab-btn.active { background: var(--red-button); color: var(--white); }
+
+    .panel { display: none; background: var(--white); border-radius: 12px; padding: 20px; box-shadow: 0 8px 20px rgba(22,43,69,0.08); }
+    .panel.active { display: block; }
+
+    .panel-toolbar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .panel-toolbar input[type="search"] {
+      flex: 1; min-width: 200px; height: 38px; border: 1px solid rgba(22,43,69,0.25); border-radius: 8px; padding: 0 12px; font: inherit;
+    }
+    .link-btn { color: var(--red); text-decoration: none; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--gray); vertical-align: top; }
+    th { font-size: 0.7rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.04em; }
+    tr:hover td { background: #fbfaf0; }
+
+    .pill {
+      display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    }
+    .pill.unread { background: #fff1c9; color: #8a6100; }
+    .pill.read { background: var(--gray); color: var(--muted); }
+
+    .action-btn {
+      border: none; background: none; cursor: pointer; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-right: 10px;
+    }
+    .action-btn.danger { color: var(--red); }
+    .action-btn.neutral { color: var(--navy); }
+
+    .empty-state { padding: 30px; text-align: center; color: var(--muted); font-size: 0.85rem; }
+
+    .msg-body { max-width: 340px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ADF 2027 · Admin Dashboard</h1>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <span class="who">Signed in as <%= adminUsername %></span>
+      <form method="post" action="/admin/logout"><button type="submit">Log out</button></form>
+    </div>
+  </header>
+
+  <main>
+    <div class="stat-row">
+      <div class="stat-card"><div class="num"><%= registrationCount %></div><div class="label">Registrations</div></div>
+      <div class="stat-card"><div class="num"><%= messageCount %></div><div class="label">Messages</div></div>
+      <div class="stat-card"><div class="num"><%= unreadCount %></div><div class="label">Unread messages</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="registrations">Registrations</button>
+      <button class="tab-btn" data-tab="messages">Contact messages</button>
+    </div>
+
+    <section class="panel active" id="panel-registrations">
+      <div class="panel-toolbar">
+        <input type="search" id="regSearch" placeholder="Search by name, email, or student number…">
+        <a class="link-btn" href="/admin/export/registrations.csv">Export CSV</a>
+      </div>
+      <div id="regTableWrap"><div class="empty-state">Loading…</div></div>
+    </section>
+
+    <section class="panel" id="panel-messages">
+      <div class="panel-toolbar">
+        <span></span>
+      </div>
+      <div id="msgTableWrap"><div class="empty-state">Loading…</div></div>
+    </section>
+  </main>
+
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const panels = { registrations: document.getElementById("panel-registrations"), messages: document.getElementById("panel-messages") };
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        Object.values(panels).forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        panels[btn.dataset.tab].classList.add("active");
+      });
+    });
+
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+      }[c]));
+    }
+
+    function formatDate(iso) {
+      try {
+        return new Date(iso + "Z").toLocaleString();
+      } catch {
+        return iso;
+      }
+    }
+
+    async function loadRegistrations(search = "") {
+      const wrap = document.getElementById("regTableWrap");
+      const url = "/admin/api/registrations" + (search ? "?search=" + encodeURIComponent(search) : "");
+      const res = await fetch(url);
+      const rows = await res.json();
+
+      if (!rows.length) {
+        wrap.innerHTML = '<div class="empty-state">No registrations yet.</div>';
+        return;
+      }
+
+      wrap.innerHTML = `
+        <table>
+          <thead><tr>
+            <th>Name</th><th>Email</th><th>Student #</th><th>Screenshot</th><th>Registered</th><th></th>
+          </tr></thead>
+          <tbody>
+            ${rows.map((r) => `
+              <tr data-id="${r.id}">
+                <td>${escapeHtml(r.full_name)}</td>
+                <td>${escapeHtml(r.email)}</td>
+                <td>${escapeHtml(r.student_number)}</td>
+                <td><a class="link-btn" href="/admin/screenshots/${encodeURIComponent(r.screenshot_filename)}" target="_blank" rel="noopener">View</a></td>
+                <td>${formatDate(r.created_at)}</td>
+                <td><button class="action-btn danger" data-action="delete-reg" data-id="${r.id}">Delete</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function loadMessages() {
+      const wrap = document.getElementById("msgTableWrap");
+      const res = await fetch("/admin/api/messages");
+      const rows = await res.json();
+
+      if (!rows.length) {
+        wrap.innerHTML = '<div class="empty-state">No messages yet.</div>';
+        return;
+      }
+
+      wrap.innerHTML = `
+        <table>
+          <thead><tr>
+            <th>Status</th><th>From</th><th>Subject</th><th>Message</th><th>Received</th><th></th>
+          </tr></thead>
+          <tbody>
+            ${rows.map((m) => `
+              <tr data-id="${m.id}">
+                <td><span class="pill ${m.is_read ? "read" : "unread"}">${m.is_read ? "Read" : "Unread"}</span></td>
+                <td>${escapeHtml(m.name)}<br><span style="color:var(--muted); font-size:0.78rem;">${escapeHtml(m.email)}</span></td>
+                <td>${escapeHtml(m.subject)}</td>
+                <td class="msg-body">${escapeHtml(m.message)}</td>
+                <td>${formatDate(m.created_at)}</td>
+                <td>
+                  ${m.is_read ? "" : `<button class="action-btn neutral" data-action="mark-read" data-id="${m.id}">Mark read</button>`}
+                  <button class="action-btn danger" data-action="delete-msg" data-id="${m.id}">Delete</button>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    document.getElementById("regSearch").addEventListener("input", (e) => {
+      loadRegistrations(e.target.value.trim());
+    });
+
+    document.addEventListener("click", async (e) => {
+      const action = e.target.dataset.action;
+      if (!action) return;
+      const id = e.target.dataset.id;
+
+      if (action === "delete-reg") {
+        if (!confirm("Delete this registration? This also removes the uploaded screenshot.")) return;
+        await fetch("/admin/api/registrations/" + id, { method: "DELETE" });
+        loadRegistrations(document.getElementById("regSearch").value.trim());
+      }
+
+      if (action === "delete-msg") {
+        if (!confirm("Delete this message?")) return;
+        await fetch("/admin/api/messages/" + id, { method: "DELETE" });
+        loadMessages();
+      }
+
+      if (action === "mark-read") {
+        await fetch("/admin/api/messages/" + id + "/read", { method: "POST" });
+        loadMessages();
+      }
+    });
+
+    loadRegistrations();
+    loadMessages();
+  </script>
+</body>
+</html>
