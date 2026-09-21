@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/registration.css">
+    <script src="scripts/main.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="index.html" class="brand">
+                <img src="images/fox-logo.avif" alt="School of Computing fox logo">
+                <span>School of Computing</span>
+            </a>
+
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="services.html">Services</a>
+                <a href="#contact" class="active">Contact Us</a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="registration-page">
+        <section class="registration-section" aria-labelledby="registration-title">
+            <div class="section-heading">
+                <p class="registration-kicker">A Day with the Foxes 2027</p>
+                <h1 id="registration-title">Event Registration</h1>
+            </div>
+
+            <div class="registration-panel">
+                <div class="form-column">
+                    <a class="back-link" href="index.html">← Back</a>
+                    <p class="form-intro">Register for A Day with the Foxes 2027 and join us for a day of computing, creativity, and community.</p>
+
+                    <form action="#registration-success" method="post" enctype="multipart/form-data">
+                        <div class="form-field">
+                            <label for="full-name">Full name</label>
+                            <input id="full-name" name="full-name" type="text" autocomplete="name" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="email">Email address</label>
+                            <input id="email" name="email" type="email" autocomplete="email" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="student-number">Student number</label>
+                            <input id="student-number" name="student-number" type="text" inputmode="numeric" pattern="[0-9]{2}-[0-9]{5}" required>
+                        </div>
+
+                        <div class="form-field upload-field">
+                            <label for="profile-screenshot">Campus++ profile screenshot</label>
+                            <label class="upload-box" for="profile-screenshot">
+                                <span class="upload-icon" aria-hidden="true">☁</span>
+                                <p>Click to upload a screenshot</p>
+                                <span class="visually-hidden">Choose a screenshot file</span>
+                            </label>
+                            <input id="profile-screenshot" name="profile-screenshot" type="file" accept="image/*" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="button button-primary" type="submit">Register</button>
+                            <button class="button button-secondary" type="reset">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <aside class="registration-aside" aria-label="Registration information">
+                    <div class="aside-card">
+                        <h2>Before you register</h2>
+                        <p>Have your Campus++ profile screenshot and Student ID ready. Please bring your ID with you on the day of the event.</p>
+                    </div>
+                </aside>
+            </div>
+
+        </section>
+
+        <section class="faq-section" aria-labelledby="faq-title">
+            <div class="faq-layout">
+                <div class="faq-intro">
+                    <h2 id="faq-title">Need help?</h2>
+                </div>
+
+                <div class="faq-list">
+                    <details>
+                        <summary>How do I get my Campus++ Profile?</summary>
+                        <p>Open Campus++, sign in with your student account, and capture the profile page showing your name and student number.</p>
+                    </details>
+                    <details>
+                        <summary>What if I lost my Student ID?</summary>
+                        <p>Please contact the School of Computing office before registering so we can help verify your student details.</p>
+                    </details>
+                    <details>
+                        <summary>Can I register on the day itself?</summary>
+                        <p>On-site registration may be available while slots last. Register online ahead of time to reserve your place.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+        <div class="footer-branding">
+            <img src="images/hau-logo.png" alt="Holy Angel University logo">
+            <div>
+                <p>#1 Holy Angel Avenue, Sto. Rosario</p>
+                <p>Angeles City, Philippines 2009</p>
+                <p>© 2026 School of Computing - HAU</p>
+            </div>
+            <img src="images/soc-logo.png" alt="School of Computing logo">
+        </div>
+    </footer>
+</body>
+</html>
