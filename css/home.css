@@ -1200,6 +1200,14 @@ p {
   display: grid;
 }
 
+.gallery-lightbox.is-closed {
+  display: none !important;
+}
+
+body:has(.gallery-lightbox:target) {
+  overflow-y: hidden;
+}
+
 .gallery-lightbox img {
   display: block;
   max-width: min(100%, 1100px);

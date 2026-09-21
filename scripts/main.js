@@ -150,6 +150,25 @@ if (countdown) {
   countdownInt = setInterval(updateCountdown, 1000);
 }
 
+/* Close promotional lightboxes without moving the page */
+document.querySelectorAll(".gallery-lightbox-close").forEach((closeLink) => {
+  closeLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeLink.closest(".gallery-lightbox").classList.add("is-closed");
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  });
+});
+
+document.querySelectorAll(".promotion-gallery-card").forEach((galleryLink) => {
+  galleryLink.addEventListener("click", () => {
+    const lightbox = document.querySelector(galleryLink.hash);
+
+    if (lightbox) {
+      lightbox.classList.remove("is-closed");
+    }
+  });
+});
+
 /* =========================================================
    SERVICES PAGE: FAQ SECTION
 ========================================================= */
