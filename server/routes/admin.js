@@ -5,8 +5,17 @@ const bcrypt = require("bcryptjs");
 const db = require("../db");
 const requireAdmin = require("../middleware/requireAdmin");
 const { uploadDir } = require("../middleware/upload");
+const { decryptBuffer } = require("../lib/encryption");
 
 const router = express.Router();
+
+const MIME_BY_EXT = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+};
 
 // ---------- Login / logout ----------
 
@@ -47,6 +56,16 @@ router.post("/logout", (req, res) => {
 });
 
 // ---------- Dashboard page ----------
+
+// The dashboard's JavaScript lives in its own file rather than inline in the
+// page, because the site's Content-Security-Policy (server.js) only allows
+// scripts from our own origin — inline <script> blocks are refused by the
+// browser. Keeping it behind requireAdmin also means the admin UI code isn't
+// handed out to anonymous visitors.
+router.get("/dashboard.js", requireAdmin, (req, res) => {
+  res.type("application/javascript");
+  res.sendFile(path.join(__dirname, "..", "public", "dashboard.js"));
+});
 
 router.get("/", requireAdmin, (req, res) => {
   const registrationCount = db.prepare("SELECT COUNT(*) AS c FROM registrations").get().c;
@@ -169,7 +188,65 @@ router.get("/screenshots/:filename", requireAdmin, (req, res) => {
   if (!fs.existsSync(filePath)) {
     return res.status(404).send("Not found.");
   }
-  res.sendFile(filePath);
+
+  // Screenshots are stored encrypted at rest (see lib/encryption.js) — the
+  // file on disk is not a viewable image on its own. Decrypt it in memory
+  // and stream the result to the authenticated admin viewing it.
+  try {
+    const encrypted = fs.readFileSync(filePath);
+    const decrypted = decryptBuffer(encrypted);
+    const originalExt = path.extname(filename.replace(/\.enc$/i, "")).toLowerCase();
+    const contentType = MIME_BY_EXT[originalExt] || "application/octet-stream";
+
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Content-Disposition", "inline");
+    res.setHeader("Cache-Control", "private, no-store");
+    res.send(decrypted);
+  } catch (err) {
+    console.error("Failed to decrypt screenshot:", err);
+    res.status(500).send("Could not decrypt this file. Check UPLOAD_ENCRYPTION_KEY.");
+  }
+});
+
+// ---------- Data retention / purge ----------
+// PRD's Data Privacy requirement: registrant data (including ID screenshots)
+// should be deleted/archived after the event per your org's retention
+// practice. Rather than guess a retention window and auto-delete on a
+// timer, this gives an admin an explicit, deliberate action: pick a cutoff
+// date, confirm, and everything registered before it — plus its screenshot
+// file — is permanently deleted.
+//
+// The same operation is available from the command line via
+// `npm run purge-old-data -- 2027-06-01`, e.g. to wire into a cron job on
+// your host once your org settles on a fixed retention period.
+router.post("/api/purge", requireAdmin, (req, res) => {
+  const { before } = req.body || {};
+
+  if (!before) {
+    return res.status(400).json({ error: "A cutoff date is required." });
+  }
+
+  const cutoff = new Date(before);
+  if (Number.isNaN(cutoff.getTime())) {
+    return res.status(400).json({ error: "That doesn't look like a valid date." });
+  }
+
+  const rows = db
+    .prepare(`SELECT id, screenshot_filename FROM registrations WHERE created_at < ?`)
+    .all(cutoff.toISOString());
+
+  const deleteStmt = db.prepare(`DELETE FROM registrations WHERE id = ?`);
+  const purge = db.transaction((items) => {
+    items.forEach((row) => {
+      deleteStmt.run(row.id);
+      if (row.screenshot_filename) {
+        fs.unlink(path.join(uploadDir, row.screenshot_filename), () => {});
+      }
+    });
+  });
+  purge(rows);
+
+  res.json({ ok: true, deletedCount: rows.length });
 });
 
 module.exports = router;

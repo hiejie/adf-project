@@ -19,6 +19,49 @@ const isProduction = process.env.NODE_ENV === "production";
 // Front-end lives one directory up from /server
 const SITE_ROOT = path.join(__dirname, "..");
 
+// ---------- Fail-fast startup checks ----------
+// Better to refuse to start with a clear message than to run insecurely.
+// The screenshot-encryption key is required in every environment, because
+// without it the registration form is fundamentally broken (uploads can't
+// be encrypted or decrypted). The session/admin secrets are only enforced
+// in production — a fresh local dev checkout should still boot with the
+// documented dev-only fallbacks so newcomers aren't blocked before they've
+// even run the admin seed script.
+const encryptionKey = process.env.UPLOAD_ENCRYPTION_KEY || "";
+if (!/^[0-9a-fA-F]{64}$/.test(encryptionKey)) {
+  console.error(
+    "[startup] UPLOAD_ENCRYPTION_KEY is missing or invalid. It must be a 64-character hex string.\n" +
+      "Generate one with:\n" +
+      "  node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"\n" +
+      "and add it to your .env file as UPLOAD_ENCRYPTION_KEY."
+  );
+  process.exit(1);
+}
+
+if (isProduction) {
+  const sessionSecret = process.env.SESSION_SECRET || "";
+  if (!sessionSecret || sessionSecret.startsWith("dev-only")) {
+    console.error(
+      "[startup] Refusing to start in production with a missing/default SESSION_SECRET.\n" +
+        "Set a real, random value in your .env file."
+    );
+    process.exit(1);
+  }
+  if (!process.env.ADMIN_PASSWORD_HASH) {
+    console.error(
+      '[startup] Refusing to start in production without ADMIN_PASSWORD_HASH.\n' +
+        'Run: npm run seed-admin -- "yourStrongPassword123"'
+    );
+    process.exit(1);
+  }
+  if ((process.env.ADMIN_USERNAME || "admin") === "admin") {
+    console.warn(
+      "[startup] warning: ADMIN_USERNAME is still the default 'admin'. Consider changing it " +
+        "in .env — it doesn't need to be a secret, but a non-default value removes one easy guess."
+    );
+  }
+}
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 // If deployed behind a single reverse proxy / load balancer (nginx, Render,
@@ -51,8 +94,8 @@ app.use(
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         "img-src": ["'self'", "data:"],
-        "font-src": ["'self'", "https://fonts.gstatic.com"],
-        "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+        "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
         "script-src": ["'self'"],
       },
     },
@@ -114,9 +157,6 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`ADF 2027 server running at http://localhost:${PORT}`);
-  if (isProduction && (process.env.SESSION_SECRET || "").startsWith("dev-only")) {
-    console.warn("[warning] SESSION_SECRET looks like the default dev value. Set a real one before going live.");
-  }
   verifyMailer();
 });
 

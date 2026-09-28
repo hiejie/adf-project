@@ -1,19 +1,16 @@
 const express = require("express");
-const fs = require("fs");
+const fs = require("fs/promises");
+const path = require("path");
 const db = require("../db");
-const { upload } = require("../middleware/upload");
+const { upload, uploadDir, generateStoredFilename } = require("../middleware/upload");
+const { encryptBuffer } = require("../lib/encryption");
+const { isSpam } = require("../lib/spamCheck");
 const { sendRegistrationConfirmationEmail } = require("../mailer");
 
 const router = express.Router();
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const STUDENT_NUMBER_RE = /^\d{8}$/;
-
-function cleanupUploadedFile(file) {
-  if (file && file.path) {
-    fs.unlink(file.path, () => {});
-  }
-}
 
 router.post("/", (req, res) => {
   upload.single("profile-screenshot")(req, res, async (uploadErr) => {
@@ -29,9 +26,18 @@ router.post("/", (req, res) => {
       return res.status(400).json({ error: "There was a problem uploading your screenshot." });
     }
 
+    // Honeypot check — a real registrant never fills this hidden field in.
+    // Bots almost always do. We reject rather than silently "succeed" so a
+    // real user who somehow triggers it (e.g. aggressive browser autofill)
+    // gets a clear error instead of thinking they registered when they didn't.
+    if (isSpam(req.body)) {
+      return res.status(400).json({ error: "Your submission could not be processed. Please try again." });
+    }
+
     const fullName = (req.body["full-name"] || "").trim();
     const email = (req.body["email"] || "").trim().toLowerCase();
     const studentNumber = (req.body["student-number"] || "").replace(/\D/g, "").trim();
+    const consentGiven = req.body["consent"] === "on" || req.body["consent"] === "true";
     const errors = [];
 
     if (!fullName || fullName.length < 2) {
@@ -46,23 +52,42 @@ router.post("/", (req, res) => {
     if (!req.file) {
       errors.push("Please upload your Campus++ profile screenshot.");
     }
+    if (!consentGiven) {
+      errors.push("Please agree to the Privacy Policy and Terms of Service to register.");
+    }
 
     if (errors.length > 0) {
-      cleanupUploadedFile(req.file);
+      // Nothing has been written to disk yet at this point (multer is
+      // using memoryStorage), so there's nothing to clean up on failure.
       return res.status(400).json({ error: errors[0], errors });
     }
 
+    // Encrypt the screenshot in memory and only then write it to disk.
+    let storedFilename;
     try {
+      storedFilename = generateStoredFilename(req.file.originalname);
+      const encrypted = encryptBuffer(req.file.buffer);
+      await fs.writeFile(path.join(uploadDir, storedFilename), encrypted);
+    } catch (encryptErr) {
+      console.error("Failed to encrypt/store screenshot:", encryptErr);
+      return res.status(500).json({ error: "Something went wrong. Please try again." });
+    }
+
+    try {
+      const consentAt = new Date().toISOString();
       const stmt = db.prepare(`
-        INSERT INTO registrations (full_name, email, student_number, screenshot_filename, screenshot_original_name)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO registrations
+          (full_name, email, student_number, screenshot_filename, screenshot_original_name, consent_given, consent_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `);
       const result = stmt.run(
         fullName,
         email,
         studentNumber,
-        req.file.filename,
-        req.file.originalname
+        storedFilename,
+        req.file.originalname,
+        1,
+        consentAt
       );
 
       // Registration is saved regardless of whether the confirmation email succeeds.
@@ -85,7 +110,8 @@ router.post("/", (req, res) => {
         emailSent: emailResult.sent,
       });
     } catch (dbErr) {
-      cleanupUploadedFile(req.file);
+      // Roll back the encrypted file we just wrote since the record wasn't saved.
+      fs.unlink(path.join(uploadDir, storedFilename)).catch(() => {});
 
       if (dbErr.code === "SQLITE_CONSTRAINT_UNIQUE") {
         const field = dbErr.message.includes("email") ? "email address" : "student number";

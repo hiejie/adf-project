@@ -39,6 +39,17 @@ Open `.env` and set:
   node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
   ```
 - `ADMIN_USERNAME` — the username you'll use to log into `/admin`.
+- `UPLOAD_ENCRYPTION_KEY` — **required in every environment**, including
+  local dev. Campus++ screenshots are encrypted before being written to
+  disk; without this key the server refuses to start. Generate one with:
+  ```bash
+  node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+  ```
+  Back this up somewhere safe outside of git (e.g. a password manager). If
+  it's ever lost or rotated, previously-uploaded screenshots become
+  permanently unreadable.
+- `ADMIN_NOTIFY_EMAIL` — optional. If set (and SMTP is configured), an email
+  is sent to this address whenever a new Contact Us message comes in.
 
 Then generate a bcrypt hash for your admin password and save it into `.env`
 automatically:
@@ -90,10 +101,43 @@ The whole site (front end + API + admin) is now available at
 ## Data storage
 
 - SQLite database: `server/data/adf2027.db` (created automatically on first run)
-- Uploaded screenshots: `server/uploads/`
+- Uploaded screenshots: `server/uploads/` — stored **encrypted** (AES-256-GCM,
+  see `lib/encryption.js`). The admin dashboard decrypts them on the fly when
+  an authenticated organizer views one; the files are not viewable images on
+  their own.
 
 Both are git-ignored — back them up yourself before redeploying or wiping the
-server.
+server. Note: on many free-tier PaaS hosts (Render, Railway, etc.) the local
+disk is **not persistent** across restarts/redeploys — see `DEPLOYMENT.md` at
+the project root before relying on this in production.
+
+## Consent & spam protection
+
+- The registration form includes a required consent checkbox (linked to
+  `/privacy.html` and `/terms.html`). The server rejects any registration
+  submitted without it, and records `consent_given`/`consent_at` per
+  registrant as evidence consent was actually given.
+- Both public forms include a hidden honeypot field (`hp_confirm`). Real
+  users never see or fill it in; submissions where it's non-empty are
+  rejected as spam. See `lib/spamCheck.js`. This has no external dependency
+  or setup cost — if bot traffic remains a problem after launch, adding a
+  CAPTCHA service (e.g. hCaptcha) on top is a reasonable next step.
+
+## Data retention
+
+Per the PRD's privacy requirement, registrant data (including screenshots)
+should be deleted or archived after the event. Nothing deletes data
+automatically — you choose when, via either:
+
+- The **Data Retention** panel on the admin dashboard (pick a cutoff date,
+  confirm, done), or
+- The command line: `npm run purge-old-data -- 2027-06-01`
+
+Both permanently delete every registration (and its screenshot file) created
+before the date you give. Export a CSV backup first if you want a record.
+If your organization settles on a fixed retention window (e.g. "90 days
+after the event"), the CLI version can be wired into a scheduled cron job on
+your host.
 
 ## Notes / things to revisit before going live
 

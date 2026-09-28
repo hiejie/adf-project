@@ -108,6 +108,9 @@ School of Computing - Holy Angel University
       <p style="color: #627083; font-size: 0.85em; margin-top: 28px;">
         Questions? Visit our <a href="${SITE_URL || "#"}/contacts.html" style="color:#c9272d;">Contact Us</a> page.
       </p>
+      <p style="color: #627083; font-size: 0.85em;">
+        See our <a href="${SITE_URL || "#"}/privacy.html" style="color:#c9272d;">Privacy Policy</a> for how your registration data is stored and used.
+      </p>
       <p style="color: #627083; font-size: 0.85em;">School of Computing &mdash; Holy Angel University</p>
     </div>
   `;
@@ -127,4 +130,53 @@ School of Computing - Holy Angel University
   }
 }
 
-module.exports = { sendRegistrationConfirmationEmail, verifyMailer };
+async function sendContactNotificationEmail({ name, email, subject, message }) {
+  const notifyTo = process.env.ADMIN_NOTIFY_EMAIL;
+  if (!notifyTo) return { sent: false, reason: "ADMIN_NOTIFY_EMAIL not configured" };
+
+  const t = getTransporter();
+  if (!t) return { sent: false, reason: "SMTP not configured" };
+
+  const fromAddress = process.env.MAIL_FROM || `"${EVENT_NAME}" <no-reply@example.com>`;
+  const adminLink = SITE_URL ? `${SITE_URL}/admin` : "your admin dashboard";
+
+  const text = `New contact message received for ${EVENT_NAME}.
+
+From:    ${name} <${email}>
+Subject: ${subject}
+
+${message}
+
+View and manage messages at: ${adminLink}
+`;
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; color: #333333; max-width: 520px; margin: 0 auto;">
+      <h2 style="color: #c9272d; margin-bottom: 4px;">New contact message</h2>
+      <p style="color: #627083; margin-top: 0;">${escapeHtml(EVENT_NAME)}</p>
+      <p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p>
+      <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
+      <p style="white-space: pre-wrap; border-left: 3px solid #eeeeee; padding-left: 12px;">${escapeHtml(message)}</p>
+      <p style="color: #627083; font-size: 0.85em; margin-top: 22px;">
+        Reply directly to this student, or manage it from the <a href="${adminLink}" style="color:#c9272d;">admin dashboard</a>.
+      </p>
+    </div>
+  `;
+
+  try {
+    await t.sendMail({
+      from: fromAddress,
+      to: notifyTo,
+      replyTo: email,
+      subject: `[ADF Contact] ${subject}`,
+      text,
+      html,
+    });
+    return { sent: true };
+  } catch (err) {
+    console.error("[mailer] Failed to send contact notification email:", err.message);
+    return { sent: false, reason: err.message };
+  }
+}
+
+module.exports = { sendRegistrationConfirmationEmail, sendContactNotificationEmail, verifyMailer };

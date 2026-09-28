@@ -1,5 +1,7 @@
 const express = require("express");
 const db = require("../db");
+const { isSpam } = require("../lib/spamCheck");
+const { sendContactNotificationEmail } = require("../mailer");
 
 const router = express.Router();
 
@@ -7,6 +9,11 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_MESSAGE_LENGTH = 5000;
 
 router.post("/", (req, res) => {
+  // Honeypot check — see lib/spamCheck.js.
+  if (isSpam(req.body)) {
+    return res.status(400).json({ error: "Your message could not be sent. Please try again." });
+  }
+
   const name = (req.body.name || "").trim();
   const email = (req.body.email || "").trim().toLowerCase();
   const subject = (req.body.subject || "").trim();
@@ -38,6 +45,11 @@ router.post("/", (req, res) => {
       VALUES (?, ?, ?, ?)
     `);
     stmt.run(name, email, subject, message);
+
+    // Best-effort admin notification — doesn't block the response either way.
+    sendContactNotificationEmail({ name, email, subject, message }).catch((err) => {
+      console.error("Failed to send contact notification email:", err);
+    });
 
     return res.status(201).json({
       message: "Message sent! We'll reply within 1-2 business days.",

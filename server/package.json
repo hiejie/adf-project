@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "seed-admin": "node scripts/set-admin-password.js"
+    "seed-admin": "node scripts/set-admin-password.js",
+    "purge-old-data": "node scripts/purge-old-data.js"
   },
   "dependencies": {
     "better-sqlite3": "^11.3.0",
