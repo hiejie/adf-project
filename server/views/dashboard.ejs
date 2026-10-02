@@ -18,11 +18,12 @@
     header h1 { margin: 0; font-size: 1.15rem; }
     header .who { font-size: 0.8rem; color: #cfd8e3; }
     header form { margin: 0; }
-    header button {
+    header button, header .site-link {
       border: 1px solid rgba(255,255,255,0.4); background: transparent; color: var(--white);
       padding: 8px 16px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; text-transform: uppercase;
     }
-    header button:hover { background: rgba(255,255,255,0.12); }
+    header .site-link { text-decoration: none; }
+    header button:hover, header .site-link:hover { background: rgba(255,255,255,0.12); }
 
     main { max-width: 1100px; margin: 0 auto; padding: 26px 20px 60px; }
 
@@ -96,6 +97,7 @@
     <h1>ADF 2027 · Admin Dashboard</h1>
     <div style="display:flex; align-items:center; gap:16px;">
       <span class="who">Signed in as <%= adminUsername %></span>
+      <a class="site-link" href="/">Main site</a>
       <form method="post" action="/admin/logout"><button type="submit">Log out</button></form>
     </div>
   </header>
