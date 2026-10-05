@@ -19,6 +19,8 @@ plus its Node.js/Express backend (`server/`).
 cd server
 npm install
 cp .env.example .env      # then fill in the values — see server/README.md
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))" # paste result into "UPLOAD ENCRYPTION KEY" in .env
+node -e "console.log(require('crypto').randomBytes(48).toString('hex'))" # paste result into "SESSION_SECRET" in .env
 npm run seed-admin -- "yourStrongPassword123"
 npm start
 ```
