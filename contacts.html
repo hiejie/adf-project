@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacts | School of Computing</title>
+    <link rel="icon" href="/images/general/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="css/home.css">
   <script src="scripts/main.js" defer></script>
@@ -65,6 +66,12 @@
       </p>
 
       <form class="contact-form" id="contactForm">
+        <!-- Honeypot: hidden from real visitors, most spam bots fill it in anyway. -->
+        <label for="hp_confirm" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+          Leave this field blank
+          <input type="text" id="hp_confirm" name="hp_confirm" tabindex="-1" autocomplete="off">
+        </label>
+
         <div class="contact-form-row">
           <label>
             Full name
@@ -88,10 +95,15 @@
           <textarea name="message" rows="6" placeholder="Write your message here..." required></textarea>
         </label>
 
-        <button class="contact-submit" type="submit">Send message</button>
+        <p style="font-size:0.68rem; color:var(--muted); margin:0;">
+          By sending this message you agree to our <a href="privacy.html">Privacy Policy</a>.
+        </p>
+
+        <button class="contact-submit" type="submit" id="contactSubmit">Send message</button>
         <p class="contact-success" id="contactSuccess" role="status" aria-live="polite">
           Message sent! We&apos;ll reply within 1-2 business days.
         </p>
+        <p class="contact-success contact-error" id="contactError" role="alert" aria-live="assertive"></p>
       </form>
     </div>
 
@@ -332,24 +344,19 @@
 
 </section>
 <!-- ================= FOOTER ================= -->
-<footer class="site-footer" id="contact">
-
-    <div class="footer-branding">
-
-    <img src="images/general/hau-logo.png" alt="Holy Angel University logo">
-
-    <div>
-        <p>#1 Holy Angel Avenue, Sto. Rosario</p>
-        <p>Angeles City, Philippines 2009</p>
-        <p>© 2026 School of Computing - HAU</p>
-        <p>All rights reserved.</p>
-    </div>
-
-    <img src="images/general/soc-logo.png" alt="School of Computing logo">
-
-    </div>
-
-</footer>
+    <footer class="site-footer" id="contact">
+      <div class="footer-branding">
+        <img src="images/general/hau-logo.png" alt="Holy Angel University logo">
+        <div>
+          <p>#1 Holy Angel Avenue, Sto. Rosario</p>
+          <p>Angeles City, Philippines 2009</p>
+          <p>© 2026 School of Computing - HAU</p>
+          <p>All rights reserved.</p>
+          <p><a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html">Terms of Service</a></p>
+        </div>
+        <img src="images/general/soc-logo.png" alt="School of Computing logo">
+      </div>
+    </footer>
     
 </body>
 </html>

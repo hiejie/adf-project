@@ -170,6 +170,110 @@ document.querySelectorAll(".promotion-gallery-card").forEach((galleryLink) => {
 });
 
 /* =========================================================
+   REGISTRATION FORM SUBMISSION
+========================================================= */
+
+const registrationForm = document.getElementById("registrationForm");
+
+if (registrationForm) {
+  const studentNumberInput = document.getElementById("student-number");
+
+  if (studentNumberInput) {
+    studentNumberInput.addEventListener("input", () => {
+      studentNumberInput.value = studentNumberInput.value.replace(/\D/g, "").slice(0, 8);
+    });
+  }
+
+  const statusEl = document.getElementById("registrationStatus");
+  const submitBtn = document.getElementById("registrationSubmit");
+
+  const showStatus = (message, type) => {
+    statusEl.textContent = message;
+    statusEl.classList.remove("success", "error");
+    statusEl.classList.add("visible", type);
+  };
+
+  registrationForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting…";
+
+    try {
+      const response = await fetch(registrationForm.action, {
+        method: "POST",
+        body: new FormData(registrationForm),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        showStatus(data.error || "Something went wrong. Please try again.", "error");
+        return;
+      }
+
+      showStatus(data.message || "You're registered!", "success");
+      registrationForm.reset();
+    } catch (err) {
+      showStatus("Could not reach the server. Please check your connection and try again.", "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Register";
+    }
+  });
+}
+
+/* =========================================================
+   CONTACT FORM SUBMISSION
+========================================================= */
+
+const contactForm = document.getElementById("contactForm");
+
+if (contactForm) {
+  const successEl = document.getElementById("contactSuccess");
+  const errorEl = document.getElementById("contactError");
+  const submitBtn = document.getElementById("contactSubmit");
+
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    successEl.classList.remove("visible");
+    errorEl.classList.remove("visible");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    const formData = new FormData(contactForm);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        errorEl.textContent = data.error || "Something went wrong. Please try again.";
+        errorEl.classList.add("visible");
+        return;
+      }
+
+      successEl.textContent = data.message || "Message sent!";
+      successEl.classList.add("visible");
+      contactForm.reset();
+    } catch (err) {
+      errorEl.textContent = "Could not reach the server. Please check your connection and try again.";
+      errorEl.classList.add("visible");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send message";
+    }
+  });
+}
+
+/* =========================================================
    SERVICES PAGE: FAQ SECTION
 ========================================================= */
 

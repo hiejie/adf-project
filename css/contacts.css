@@ -131,6 +131,11 @@ body {
   display: block;
 }
 
+.contact-error {
+  border-color: rgba(201, 39, 45, 0.4);
+  color: var(--red-button, #c9272d);
+}
+
 /* Contact information sidebar */
 .contact-sidebar {
   align-self: start;

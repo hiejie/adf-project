@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Registration</title>
+    <link rel="icon" href="/images/general/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,7 +45,15 @@
                     <a class="back-link" href="index.html">← Back</a>
                     <p class="form-intro">Register for A Day with the Foxes 2027 and join us for a day of computing, creativity, and community.</p>
 
-                    <form action="#registration-success" method="post" enctype="multipart/form-data">
+                    <form id="registrationForm" action="/api/register" method="post" enctype="multipart/form-data" novalidate>
+                        <p class="form-status" id="registrationStatus" role="status" aria-live="polite"></p>
+
+                        <!-- Honeypot: hidden from real visitors, most spam bots fill it in anyway. -->
+                        <label for="hp_confirm" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+                            Leave this field blank
+                            <input type="text" id="hp_confirm" name="hp_confirm" tabindex="-1" autocomplete="off">
+                        </label>
+
                         <div class="form-field">
                             <label for="full-name">Full name</label>
                             <input id="full-name" name="full-name" type="text" autocomplete="name" required>
@@ -57,7 +66,7 @@
 
                         <div class="form-field">
                             <label for="student-number">Student number</label>
-                            <input id="student-number" name="student-number" type="text" inputmode="numeric" pattern="[0-9]{2}-[0-9]{5}" required>
+                            <input id="student-number" name="student-number" type="text" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" minlength="8" placeholder="12345678" title="Enter exactly 8 digits, numbers only." required>
                         </div>
 
                         <div class="form-field upload-field">
@@ -67,11 +76,24 @@
                                 <p>Click to upload a screenshot</p>
                                 <span class="visually-hidden">Choose a screenshot file</span>
                             </label>
-                            <input id="profile-screenshot" name="profile-screenshot" type="file" accept="image/*" required>
+                            <input id="profile-screenshot" name="profile-screenshot" type="file" accept="image/jpeg,image/png,image/webp,image/gif" required>
+                            <small style="display:block; margin-top:6px; color:var(--muted-ink); font-size:0.7rem;">JPG, PNG, WEBP, or GIF — max 5MB.</small>
+                        </div>
+
+                        <div class="form-field consent-field">
+                            <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; text-transform:none; font-weight:400; letter-spacing:normal;">
+                                <input type="checkbox" id="consent" name="consent" required style="margin-top:3px;">
+                                <span style="font-size:0.78rem; color:var(--dark-text); line-height:1.6;">
+                                    I have read and agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
+                                    and <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a>, and I consent to
+                                    A Day with the Foxes / School of Computing collecting and storing my name, email, student number,
+                                    and Campus++ screenshot for event registration and eligibility verification.
+                                </span>
+                            </label>
                         </div>
 
                         <div class="form-actions">
-                            <button class="button button-primary" type="submit">Register</button>
+                            <button class="button button-primary" type="submit" id="registrationSubmit">Register</button>
                             <button class="button button-secondary" type="reset">Cancel</button>
                         </div>
                     </form>
@@ -115,9 +137,11 @@
         <div class="footer-branding">
             <img src="images/general/hau-logo.png" alt="Holy Angel University logo">
             <div>
-                <p>#1 Holy Angel Avenue, Sto. Rosario</p>
-                <p>Angeles City, Philippines 2009</p>
-                <p>© 2026 School of Computing - HAU</p>
+            <p>#1 Holy Angel Avenue, Sto. Rosario</p>
+            <p>Angeles City, Philippines 2009</p>
+            <p>© 2026 School of Computing - HAU</p>
+            <p>All rights reserved.</p>
+            <p><a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html">Terms of Service</a></p>
             </div>
             <img src="images/general/soc-logo.png" alt="School of Computing logo">
         </div>
