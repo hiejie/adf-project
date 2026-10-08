@@ -1200,6 +1200,14 @@ display: grid;
 }
 /* Enlarged image */
 
+.gallery-lightbox.is-closed {
+  display: none !important;
+}
+
+body:has(.gallery-lightbox:target) {
+  overflow-y: hidden;
+}
+
 .gallery-lightbox img {
   display: block;
 

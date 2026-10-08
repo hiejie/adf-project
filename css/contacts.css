@@ -1,4 +1,305 @@
 /* =========================================================
+   CONTACT SECTION
+========================================================= */
+
+body {
+  background: var(--orange);
+}
+
+/* Main contact section layout */
+.contact-section {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 7% 190px;
+  background: var(--orange);
+}
+
+.contact-layout {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: clamp(50px, 8vw, 110px);
+}
+
+/* Contact introduction */
+.contact-form-column h1 {
+  margin: 0 0 18px;
+  color: var(--red);
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 0.95;
+}
+
+.contact-label {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--red);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.contact-intro {
+  max-width: 560px;
+  margin-bottom: 42px;
+  color: var(--dark-text);
+  line-height: 1.8;
+}
+
+/* Contact form fields and submit state */
+.contact-form {
+  display: grid;
+  gap: 24px;
+}
+
+.contact-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 9px;
+  color: var(--dark-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 15px 16px;
+  border: 1.5px solid rgba(27, 42, 73, 0.4);
+  border-radius: 0;
+  background: var(--white);
+  color: var(--dark-text);
+  font: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  text-transform: none;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(201, 39, 45, 0.12);
+}
+
+.contact-submit {
+  width: fit-content;
+  padding: 15px 30px;
+  border: 2px solid var(--red-button);
+  background: var(--red-button);
+  color: var(--white);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-submit:hover {
+  background: transparent;
+  color: var(--red-button);
+}
+
+.contact-success {
+  display: none;
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed rgba(27, 42, 73, 0.35);
+  color: var(--dark-text);
+  font-size: 0.75rem;
+}
+
+.contact-success.visible {
+  display: block;
+}
+
+/* Contact information sidebar */
+.contact-sidebar {
+  align-self: start;
+  padding-top: 10px;
+}
+
+.contact-details {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 18px 16px;
+  border: 1px solid rgba(27, 42, 73, 0.2);
+  color: var(--dark-text);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+a.contact-detail:hover {
+  border-color: var(--red);
+}
+
+.contact-detail-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  place-items: center;
+  border: 1.5px solid var(--dark-navy);
+  color: var(--red);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.contact-detail-icon svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contact-detail span:last-child {
+  display: grid;
+  gap: 2px;
+}
+
+.contact-detail strong {
+  color: var(--red);
+  font-size: 0.63rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.contact-detail small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+/* Social media links */
+.contact-socials {
+  margin-top: 42px;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.social-links a {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1.5px solid var(--dark-navy);
+  color: var(--dark-navy);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.social-links svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-links svg path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.social-links svg .social-icon-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.social-links a:hover {
+  background: var(--dark-navy);
+  color: var(--white);
+}
+
+/* Decorative fox paw */
+.paw-mark1 {
+  width: 150px;
+  margin: 48px auto 0;
+  position: relative;
+  color: var(--red);
+  opacity: 0.82;
+  transform: rotate(-12deg);
+  right: 55px;
+  top: 45px;
+}
+
+.paw-mark2 {
+  width: 150px;
+  margin: 48px auto 0;
+  color: var(--red);
+  opacity: 0.82;
+  transform: rotate(12deg);
+  position: relative;
+  left: 95px;
+  top: 35px;
+}
+
+.paw-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* wave transition (background) */
+.contact-wave {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.contact-wave svg {
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 105px;
+}
+
+.contact-wave path {
+  fill: var(--cream);
+}
+
+.contact-layout {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
    FAQ SECTION
 ========================================================= */
 
@@ -224,6 +525,11 @@
    TABLET
 ========================================================= */
 @media (max-width: 900px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+
     .adf-faq-section {
     grid-template-columns: 1fr;
     gap: 50px;
@@ -242,6 +548,19 @@
 ========================================================= */
 
 @media (max-width: 650px) {
+    .contact-section {
+      padding: 55px 7% 150px;
+    }
+
+    .contact-form-row {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .contact-form-column h1 {
+      font-size: 3rem;
+    }
+
     .adf-faq-section {
     padding: 65px 7%;
     gap: 40px;
