@@ -150,23 +150,62 @@ if (countdown) {
   countdownInt = setInterval(updateCountdown, 1000);
 }
 
-/* Close promotional lightboxes without moving the page */
-document.querySelectorAll(".gallery-lightbox-close").forEach((closeLink) => {
-  closeLink.addEventListener("click", (event) => {
+/* =========================================================
+   EVENT PROMOTION LIGHTBOX
+========================================================= */
+
+const promotionCards = document.querySelectorAll( ".promotion-gallery-card, .gallery-item");
+const lightboxes = document.querySelectorAll(".gallery-lightbox");
+
+function closeLightbox(lightbox) {
+  if (!lightbox) return;
+
+  lightbox.classList.remove("is-open");
+  document.body.classList.remove("lightbox-open");
+}
+
+promotionCards.forEach((card) => {
+  card.addEventListener("click", (event) => {
     event.preventDefault();
-    closeLink.closest(".gallery-lightbox").classList.add("is-closed");
-    history.replaceState(null, "", window.location.pathname + window.location.search);
+
+    const targetId = card.getAttribute("href");
+    const lightbox = document.querySelector(targetId);
+
+    if (!lightbox) return;
+
+    lightboxes.forEach((item) => {
+      item.classList.remove("is-open");
+    });
+
+    lightbox.classList.add("is-open");
+    document.body.classList.add("lightbox-open");
   });
 });
 
-document.querySelectorAll(".promotion-gallery-card").forEach((galleryLink) => {
-  galleryLink.addEventListener("click", () => {
-    const lightbox = document.querySelector(galleryLink.hash);
+lightboxes.forEach((lightbox) => {
+  const closeButton = lightbox.querySelector("[data-close-lightbox]");
 
-    if (lightbox) {
-      lightbox.classList.remove("is-closed");
+  if (closeButton) {
+    closeButton.addEventListener("click", () => {
+      closeLightbox(lightbox);
+    });
+  }
+
+  // Close when clicking the dark background
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      closeLightbox(lightbox);
     }
   });
+});
+
+// Close when pressing Escape
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    lightboxes.forEach((lightbox) => {
+      closeLightbox(lightbox);
+    });
+  }
 });
 
 /* =========================================================

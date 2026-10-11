@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>A Day with the Foxes | School of Computing</title>
-  <link rel="icon" href="/images/general/favicon.ico" type="image/x-icon">
-
   <link rel="stylesheet" href="css/home.css">
   <script src="scripts/main.js" defer></script>
 
@@ -125,11 +123,11 @@
         </p>
 
         <p class="contact-note">
-          Contact: <b><i>Dr. Mary Jane Rabena</i></b> or <b><i>Sir Bon Flores</i></b>
+          Contact: Dr. Mary Jane Rabena or Sir Bon Flores
           for more information.
         </p>
 
-        <a href="registration.html" class="btn">Register Now!</a>
+        <a href="#register" class="btn">Register Now!</a>
       </div>
 
       <div class="about-curve">
@@ -359,7 +357,7 @@
           </div>
         </div>
 
-        <div class="promotion-gallery" aria-label="ADF promotional materials">
+        <div class="promotion-gallery"  id="event-promotion-gallery" aria-label="ADF promotional materials">
           <a class="promotion-gallery-card" href="#promotion-poster" aria-label="View ADF poster enlarged">
             <img src="images/home/adf-poster.avif" alt="A Day with the Foxes 2027 poster">
             <span>ADF Poster</span>
@@ -375,15 +373,16 @@
         </div>
 
         <div class="gallery-lightbox" id="promotion-poster">
-          <a class="gallery-lightbox-close" href="#register" aria-label="Close enlarged poster">&times;</a>
+          <button class="gallery-lightbox-close" type="button" data-close-lightbox aria-label="Close enlarged poster"> &times; </button>
           <img src="images/home/adf-poster.avif" alt="A Day with the Foxes 2027 poster">
         </div>
+
         <div class="gallery-lightbox" id="promotion-infographic">
-          <a class="gallery-lightbox-close" href="#register" aria-label="Close enlarged infographic">&times;</a>
+          <button class="gallery-lightbox-close" type="button" data-close-lightbox aria-label="Close enlarged poster"> &times; </button>
           <img src="images/home/adf-infographic.png" alt="A Day with the Foxes event infographic">
         </div>
         <div class="gallery-lightbox" id="promotion-brochure">
-          <a class="gallery-lightbox-close" href="#register" aria-label="Close enlarged brochure">&times;</a>
+          <button class="gallery-lightbox-close" type="button" data-close-lightbox aria-label="Close enlarged poster"> &times; </button>
           <img src="images/home/adf-brochure.png" alt="A Day with the Foxes event brochure">
         </div>
       </div>
@@ -395,9 +394,8 @@
       </div>
 
     </section>
-
-
-    <!-- ================= FOOTER ================= -->
+    
+<!-- ================= FOOTER ================= -->
     <footer class="site-footer" id="contact">
       <div class="footer-branding">
         <img src="images/general/hau-logo.png" alt="Holy Angel University logo">
